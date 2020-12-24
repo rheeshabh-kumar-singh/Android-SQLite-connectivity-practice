@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -48,4 +49,22 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.first_menu, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+            // Respond to a click on the "Insert dummy data" menu option
+            case R.id.dummydata:
+                // Do nothing for now
+                return true;
+            // Respond to a click on the "Delete all entries" menu option
+            case R.id.delete_all:
+                // Do nothing for now
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

@@ -8,7 +8,7 @@
         android:title="Insert Dummy Data"
         app:showAsAction="never"></item>
     <item
-        android:id="@+id/first_menu"
+        android:id="@+id/delete_all"
         android:title="Delete All Pets"
         app:showAsAction="never"></item>
 </menu>
