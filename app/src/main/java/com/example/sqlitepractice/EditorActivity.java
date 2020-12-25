@@ -1,5 +1,7 @@
 package com.example.sqlitepractice;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -10,12 +12,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.sqlitepractice.data.DbHelper;
 import com.example.sqlitepractice.data.PetContract.petEntry;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+
+
 
 public class EditorActivity extends AppCompatActivity {
 
@@ -25,6 +31,7 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mWeightEditText;
     private Spinner mGenderSpinner;
     private int mGender = petEntry.GENDER_UNKNOWN;
+    public DbHelper mDbHelper;
 
 
     @Override
@@ -40,6 +47,7 @@ public class EditorActivity extends AppCompatActivity {
         mBreedEditText = (EditText) findViewById(R.id.edit_pet_breed);
         mWeightEditText = (EditText) findViewById(R.id.edit_pet_weight);
         mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
+        mDbHelper= new DbHelper(this);
 
         setupSpinner();
     }
@@ -88,13 +96,36 @@ public class EditorActivity extends AppCompatActivity {
     }
 
 
+
+    private void insertPet() {
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+
+        String mName = mNameEditText.getText().toString().trim();
+        String mBreed = mBreedEditText.getText().toString().trim();
+        int mWeight = Integer.parseInt(mWeightEditText.getText().toString().trim());
+
+
+        ContentValues values = new ContentValues();
+        values.put(petEntry.COLUMN_PET_NAME, mName);
+        values.put(petEntry.COLUMN_PET_BREED, mBreed);
+        values.put(petEntry.COLUMN_PET_GENDER, mGender);
+        values.put(petEntry.COLUMN_PET_WEIGHT, mWeight);
+
+        long newRowId = db.insert(petEntry.TABLE_NAME, null, values);
+        String rid = String.valueOf(newRowId);
+        Toast.makeText(this, rid , Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.save:
-                // Do nothing for now
+                insertPet();
+                finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.delete_option:

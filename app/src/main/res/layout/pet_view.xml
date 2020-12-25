@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/pet_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Name"
+            android:textColor="@color/design_default_color_secondary_variant"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:padding="6dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/pet_gender"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Gender"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:padding="6dp">
+
+        </TextView>
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+        <TextView
+            android:padding="6dp"
+            android:id="@+id/pet_breed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="breed"
+            android:textAlignment="center">
+
+        </TextView>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="6dp">
+        <TextView
+
+            android:id="@+id/pet_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="breed"
+            >
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kg"
+            android:layout_marginLeft="4dp"></TextView>
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
