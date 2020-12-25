@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.sqlitepractice.data.DbHelper;
@@ -17,12 +17,18 @@ import com.example.sqlitepractice.data.PetContract.petEntry;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
+    ListView list;
     FloatingActionButton fab;
     public DbHelper mDbHelper;
+    ArrayList<PetAttribute> attributes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         MaterialToolbar toolbar =(MaterialToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        attributes= new ArrayList<PetAttribute>();
+        list=(ListView)findViewById(R.id.list_view);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 null,                  // Don't filter by row groups
                 null);                   // The sort order
 
-        TextView displayView = (TextView) findViewById(R.id.text_view_pet);
+
 
         try {
             // Create a header in the Text View that looks like this:
@@ -144,12 +151,7 @@ public class MainActivity extends AppCompatActivity {
             //
             // In the while loop below, iterate through the rows of the cursor and display
             // the information from each column in this order.
-            displayView.setText("The pets table contains " + cursor.getCount() + " pets.\n\n");
-            displayView.append(petEntry._ID + " - " +
-                    petEntry.COLUMN_PET_NAME + " - " +
-                    petEntry.COLUMN_PET_BREED + " - " +
-                    petEntry.COLUMN_PET_GENDER + " - " +
-                    petEntry.COLUMN_PET_WEIGHT + "\n");
+
 
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex(petEntry._ID);
@@ -167,12 +169,8 @@ public class MainActivity extends AppCompatActivity {
                 String currentBreed = cursor.getString(breedColumnIndex);
                 int currentGender = cursor.getInt(genderColumnIndex);
                 int currentWeight = cursor.getInt(weightColumnIndex);
-                // Display the values from each column of the current row in the cursor in the TextView
-                displayView.append(("\n" + currentID + " - " +
-                        currentName + " - " +
-                        currentBreed + " - " +
-                        currentGender + " - " +
-                        currentWeight));
+
+                attributes.add(new PetAttribute(currentID,currentName,currentBreed,currentGender,currentWeight));
             }
         } finally {
 
