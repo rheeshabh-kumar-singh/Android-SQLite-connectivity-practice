@@ -5,10 +5,10 @@ public class PetAttribute {
     int pID;
     String pName ;
     String pBreed ;
-    int pGender ;
+    String pGender ;
     int pWeight;
 
-    public PetAttribute(int pID, String pName, String pBreed, int pGender, int pWeight) {
+    public PetAttribute(int pID, String pName, String pBreed, String pGender, int pWeight) {
         this.pID = pID;
         this.pName = pName;
         this.pBreed = pBreed;
@@ -28,7 +28,7 @@ public class PetAttribute {
         return pBreed;
     }
 
-    public int getpGender() {
+    public String getpGender() {
         return pGender;
     }
 

@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <provider
+            android:authorities="com.example.sqlitepractice"
+            android:name=".data.PetProvider"
+            android:exported="false"></provider>
 
     </application>
 

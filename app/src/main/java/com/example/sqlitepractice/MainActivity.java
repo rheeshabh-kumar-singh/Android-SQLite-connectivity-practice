@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     public DbHelper mDbHelper;
     ArrayList<PetAttribute> attributes;
+    PetAdapter petAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         attributes= new ArrayList<PetAttribute>();
         list=(ListView)findViewById(R.id.list_view);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+
+        petAdapter= new PetAdapter(this,attributes);
+        list.setAdapter(petAdapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         values.put(petEntry.COLUMN_PET_WEIGHT, 7);
 
         long newRowId = db.insert(petEntry.TABLE_NAME, null, values);
-
         String rid = String.valueOf(newRowId);
         Toast.makeText(this, rid , Toast.LENGTH_LONG).show();
     }
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.dummydata:
                 insertPet();
-                displayDatabaseInfo();
+
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.delete_all:
@@ -103,21 +106,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
     @Override
     protected void onStart() {
         super.onStart();
         displayDatabaseInfo();
     }
 
-    /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the pets database.
-     */
+
     private void displayDatabaseInfo() {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -144,33 +139,36 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            // Create a header in the Text View that looks like this:
-            //
-            // The pets table contains <number of rows in Cursor> pets.
-            // _id - name - breed - gender - weight
-            //
-            // In the while loop below, iterate through the rows of the cursor and display
-            // the information from each column in this order.
 
-
-            // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex(petEntry._ID);
             int nameColumnIndex = cursor.getColumnIndex(petEntry.COLUMN_PET_NAME);
             int breedColumnIndex = cursor.getColumnIndex(petEntry.COLUMN_PET_BREED);
             int genderColumnIndex = cursor.getColumnIndex(petEntry.COLUMN_PET_GENDER);
             int weightColumnIndex = cursor.getColumnIndex(petEntry.COLUMN_PET_WEIGHT);
 
-            // Iterate through all the returned rows in the cursor
+            String g;
+
             while (cursor.moveToNext()) {
-                // Use that index to extract the String or Int value of the word
-                // at the current row the cursor is on.
                 int currentID = cursor.getInt(idColumnIndex);
                 String currentName = cursor.getString(nameColumnIndex);
                 String currentBreed = cursor.getString(breedColumnIndex);
                 int currentGender = cursor.getInt(genderColumnIndex);
                 int currentWeight = cursor.getInt(weightColumnIndex);
 
-                attributes.add(new PetAttribute(currentID,currentName,currentBreed,currentGender,currentWeight));
+                if(currentGender==0)
+                {
+                    g="Unknown Gender";
+                }
+                else if(currentGender==1)
+                {
+                    g="Male";
+                }
+                else
+                {
+                    g="Female";
+                }
+
+                attributes.add(new PetAttribute(currentID,currentName,currentBreed,g,currentWeight));
             }
         } finally {
 
